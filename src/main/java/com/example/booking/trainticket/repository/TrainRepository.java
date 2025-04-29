@@ -4,14 +4,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
 
 import com.example.booking.trainticket.model.Train;
 
 /**
  * Train Repository class to manage Train entity.
  */
+@Repository
 public class TrainRepository {
-
+	
 	// Map Train Id -> the corresponding Train
 	private final HashMap<Integer, Train> trainMap = new HashMap<>();
 
@@ -21,8 +25,9 @@ public class TrainRepository {
 		return trainMap.get(train.getTrainId());
 	}
 
-	public Train findTrainById(int trainId) {
-		return trainMap.get(trainId);
+	// find the train by trainId(For Service class impl logic)
+	public Optional<Train> findTrainById(int trainId) {
+		return Optional.ofNullable(trainMap.get(trainId));
 	}
 
 	// Retrieving Train List based on user query.
@@ -43,6 +48,11 @@ public class TrainRepository {
 	//Returns all the trains.
 	public List<Train> getAllTrains() {
 		return new ArrayList<>(trainMap.values());
+	}
+
+	// Update the train repo after booking/cancelling a ticket.
+	public void saveTrain(Train train) {
+		trainMap.put(train.getTrainId(), train);
 	}
 
 }
