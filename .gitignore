@@ -70,3 +70,7 @@ application.yml
 # Ignore Build and Output Folders
 target/
 output.json
+
+# Ensure README.md and train.json are tracked
+!README.md
+!src/main/resources/train.json
