@@ -19,8 +19,8 @@
     "source": "Delhi",
     "destination": "Kolkata",
     "availableSeatsByDate": {
-      "2025-05-10": 2,
-      "2025-05-11": 1
+      "2025-05-10": 200,
+      "2025-05-11": 100
     },
     "ticketPriceByDate": {
       "2025-05-10": 2000.0,
@@ -33,8 +33,8 @@
     "source": "Bangalore",
     "destination": "Chennai",
     "availableSeatsByDate": {
-      "2025-05-10": 2,
-      "2025-05-11": 1
+      "2025-05-10": 201,
+      "2025-05-11": 102
     },
     "ticketPriceByDate": {
       "2025-05-10": 1200.0,
