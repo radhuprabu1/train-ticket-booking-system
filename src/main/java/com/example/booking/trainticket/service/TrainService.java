@@ -10,5 +10,5 @@ public interface TrainService {
 	List<TrainDto> searchTrains(String source, String destination,
 			LocalDate departureDate);
 	
-	TrainDto fetchTrain(int trainId, LocalDate departureDate);
+	TrainDto fetchTrain(Long trainId, LocalDate departureDate);
 }

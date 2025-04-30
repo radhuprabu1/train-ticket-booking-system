@@ -84,22 +84,22 @@ class BookingServiceImplTest {
 
     // Helper methods
     private Train createDummyTrain() {
-        Map<LocalDate, Integer> seats = new HashMap<>();
-        seats.put(departureDate, 10);
+        Map<LocalDate, Long> seats = new HashMap<>();
+        seats.put(departureDate, 10L);
         Map<LocalDate, Double> prices = new HashMap<>();
         prices.put(departureDate, 500.0);
 
-        return new Train(1, "Shatabdi Express", "Chennai", "Bengaluru", seats, prices);
+        return new Train(1L, "Shatabdi Express", "Chennai", "Bengaluru", seats, prices);
     }
 
     private Traveller createDummyTraveller() {
-        return new Traveller(1, "Sachin", "Tendulkar", "1234567890");
+        return new Traveller(1L, "Sachin", "Tendulkar", "1234567890");
     }
 
     private Ticket createDummyTicket() {
         Ticket ticket = new Ticket();
         ticket.setBookingStatus(BookingStatus.CONFIRMED);
-        ticket.setSeatNumber(1);
+        ticket.setSeatNumber(1L);
         ticket.setDepartureDate(departureDate);
         ticket.setFare(500.0);
         ticket.setPnr(UUID.randomUUID().toString());
@@ -137,7 +137,6 @@ class BookingServiceImplTest {
         verify(trainRepository, atLeastOnce()).saveTrain(dummyTrain);
 
         assertEquals(BookingStatus.CONFIRMED, waitlistedTicket.getBookingStatus());
-       // assertEquals(dummyTrain.getAvailableSeatsByDate().get(departureDate), Integer.valueOf(10));
     }
 
     @Test
@@ -165,7 +164,7 @@ class BookingServiceImplTest {
     private Ticket createWaitlistedTicket() {
         Ticket ticket = new Ticket();
         ticket.setBookingStatus(BookingStatus.WAITLISTED);
-        ticket.setSeatNumber(0);
+        ticket.setSeatNumber(-1L);
         ticket.setDepartureDate(departureDate);
         ticket.setFare(500.0);
         ticket.setPnr(UUID.randomUUID().toString());

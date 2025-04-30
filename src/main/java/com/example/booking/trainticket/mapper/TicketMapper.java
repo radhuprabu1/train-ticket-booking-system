@@ -6,9 +6,12 @@ import com.example.booking.trainticket.model.Ticket;
 public class TicketMapper {
 
 	private TicketMapper() {
-		// throw exception();
+		throw new UnsupportedOperationException(
+				"TicketMapper is a utility class and cannot be instantiated."
+				);
 	}
 
+	// Map model object to Dto.
 	public static TicketDto mapToDto(Ticket ticket) {
 		return new TicketDto(
 				ticket.getPnr(),
@@ -24,6 +27,7 @@ public class TicketMapper {
 				);
 	}
 
+	// Convert Dto to model object.
 	public static Ticket mapToEntity(TicketDto ticketDto) {
 		return new Ticket(
 				ticketDto.getPnr(),

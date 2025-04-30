@@ -19,10 +19,11 @@ import com.example.booking.trainticket.service.impl.TravellerServiceImpl;
 
 class TravellerServiceImplTest {
 
-    @Mock // @Mock -> Creates a fake TravellerRepository
+	// @Mock -> Creates a fake TravellerRepository
+    @Mock
     private TravellerRepository travellerRepository;
 
- // @InjectMocks -> Injects the mocked repository into TravellerServiceImpl
+    // @InjectMocks -> Injects the mocked repository into TravellerServiceImpl
     @InjectMocks
     private TravellerServiceImpl travellerServiceImpl;
 
@@ -33,7 +34,7 @@ class TravellerServiceImplTest {
 
     @Test
     void testAddTraveller() {
-        TravellerDto dummyTravellerDto = new TravellerDto(1, "Sachin", "Tendulkar", "1234567890");
+        TravellerDto dummyTravellerDto = new TravellerDto(1L, "Sachin", "Tendulkar", "1234567890");
 
         Traveller dummyTraveller = TravellerMapper.mapToEntity(dummyTravellerDto);
         // when...thenReturn -> Tells Mockito what to return when a method is called

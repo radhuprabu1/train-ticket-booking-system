@@ -15,11 +15,11 @@ import lombok.ToString;
 @ToString
 public class Ticket {
 	private String pnr;		// Unique PNR for each ticket
-    private int trainId;	// Associated Train ID
-    private int travellerId;// Associated Traveller ID
+    private Long trainId;	// Associated Train ID
+    private Long travellerId;// Associated Traveller ID
     private LocalDate departureDate;// Travel Date
     private BookingStatus bookingStatus;	// "CONFIRMED" or "WAITLISTED"
-    private int seatNumber;	// Seat Number (-1 if waitlisted)
+    private Long seatNumber;	// Seat Number (-1 if waitlisted)
     private String travellerName;
     private String source;
     private String destination;

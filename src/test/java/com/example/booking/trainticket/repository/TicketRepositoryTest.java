@@ -68,16 +68,16 @@ class TicketRepositoryTest {
 
 	// Utility methods
 	private Train createDummyTrain() {
-		Map<LocalDate, Integer> seats = new HashMap<>();
+		Map<LocalDate, Long> seats = new HashMap<>();
 		Map<LocalDate, Double> prices = new HashMap<>();
 		LocalDate date = LocalDate.now();
-		seats.put(date, 5);
+		seats.put(date, 5L);
 		prices.put(date, 150.0);
 
-		return new Train(10, "Delhi Express", "Chennai", "Delhi", seats, prices);
+		return new Train(10L, "Delhi Express", "Chennai", "Delhi", seats, prices);
 	}
 
 	private Traveller createDummyTraveller() {
-		return new Traveller(101, "John", "Cena", "1239874560");
+		return new Traveller(101L, "John", "Cena", "1239874560");
 	}
 }
