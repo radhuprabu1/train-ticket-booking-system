@@ -1,5 +1,6 @@
 package com.example.booking.trainticket.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,14 @@ import lombok.ToString;
 @ToString
 public class TravellerDto {
 	
-	private int travellerId;
+	private Long travellerId;
+    
+	@NotBlank(message = "First name is required")
 	private String firstName;
+    
+    @NotBlank(message = "Last name is required")
 	private String lastName;
+    
+    @NotBlank(message = "Contact Number is required")
 	private String contactNumber;
 }

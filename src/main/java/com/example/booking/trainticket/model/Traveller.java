@@ -1,6 +1,7 @@
 package com.example.booking.trainticket.model;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +15,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Traveller {
 	
-	private int travellerId;
+	private Long travellerId;
 	private String firstName;
 	private String lastName;
 	private String contactNumber;

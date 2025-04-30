@@ -2,9 +2,9 @@ package com.example.booking.trainticket.repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,18 +15,22 @@ import com.example.booking.trainticket.model.Train;
  */
 @Repository
 public class TrainRepository {
-	
+
 	// Map Train Id -> the corresponding Train
-	private final HashMap<Integer, Train> trainMap = new HashMap<>();
+	private final ConcurrentHashMap<Long, Train> trainMap = new ConcurrentHashMap<>();
 
 	// Add a new train
 	public Train addTrain(Train train) {
+		// If a train already present -> throw exception
+		if (trainMap.containsKey(train.getTrainId())) {
+			throw new IllegalArgumentException("Train ID " + train.getTrainId() + " already exists.");
+		}
 		trainMap.put(train.getTrainId(), train);
 		return trainMap.get(train.getTrainId());
 	}
 
 	// find the train by trainId(For Service class impl logic)
-	public Optional<Train> findTrainById(int trainId) {
+	public Optional<Train> findTrainById(Long trainId) {
 		return Optional.ofNullable(trainMap.get(trainId));
 	}
 

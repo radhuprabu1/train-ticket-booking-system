@@ -6,7 +6,7 @@ import com.example.booking.trainticket.dto.TicketDto;
 
 public interface BookingService {
 
-	TicketDto bookTicket(int trainId, int travellerId,
+	TicketDto bookTicket(Long trainId, Long travellerId,
 			LocalDate departureDate);
 	
 	void cancelTicket(String pnr);

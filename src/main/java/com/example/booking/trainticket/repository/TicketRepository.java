@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
-import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +13,7 @@ import com.example.booking.trainticket.model.BookingStatus;
 import com.example.booking.trainticket.model.Ticket;
 import com.example.booking.trainticket.model.Train;
 import com.example.booking.trainticket.model.Traveller;
+import com.example.booking.trainticket.utils.PnrGenerator;
 
 /**
  * Repository class to manage Ticket entities.
@@ -26,6 +26,38 @@ public class TicketRepository {
 	// if the ticket status is waitlist add to this waitlistQueue
 	private final Queue<Ticket> waitlistQueue = new LinkedList<>();
 
+	// Book ticket for the traveller
+	public Ticket addBooking(Train train, Traveller traveller,
+			LocalDate departuredate) {
+		Long availSeats = train.getAvailableSeatsByDate()
+				.get(departuredate);
+
+		// Creating ticket object to populate response
+		Ticket ticket = new Ticket();
+		ticket.setDepartureDate(departuredate);
+		ticket.setFare(train.getTicketPriceByDate().get(departuredate));
+		ticket.setTrainId(train.getTrainId());
+		ticket.setTravellerId(traveller.getTravellerId());
+		ticket.setPnr(PnrGenerator.generatePnr());
+		ticket.setTravellerName(traveller.getFirstName() + " " + traveller.getLastName());
+		ticket.setDestination(train.getDestination());
+		ticket.setSource(train.getSource());
+		// Set Booking Status -> Confirmed if the seats are available for the selected train.
+		if(availSeats != null && availSeats > 0) {
+			ticket.setBookingStatus(BookingStatus.CONFIRMED);
+			ticket.setSeatNumber(availSeats);
+		}
+		// Set Booking Status -> Waitlisted if the seats are not available for the selected train.
+		else {
+			ticket.setBookingStatus(BookingStatus.WAITLISTED);
+			ticket.setSeatNumber(availSeats);
+		}
+		// save the ticket to the ticket map/waitlist queue.
+		saveTicket(ticket);
+		return ticket;
+	}
+
+	// Check booking status and save the ticket to the ticket map/waitlist queue.
 	public void saveTicket(Ticket ticket) {
 		if (ticket.getBookingStatus()
 				.equals(BookingStatus.WAITLISTED)) {
@@ -33,38 +65,22 @@ public class TicketRepository {
 		}
 		ticketMap.put(ticket.getPnr(), ticket);
 	}
-
-	public Ticket addBooking(Train train, Traveller traveller,
-			LocalDate departuredate) {
-		Integer availSeats = train.getAvailableSeatsByDate()
-				.get(departuredate);
-		
-		// Creating ticket object to populate response
-		Ticket ticket = new Ticket();
-		ticket.setDepartureDate(departuredate);
-		ticket.setFare(train.getTicketPriceByDate().get(departuredate));
-		ticket.setTrainId(train.getTrainId());
-		ticket.setTravellerId(traveller.getTravellerId());
-		ticket.setPnr(UUID.randomUUID().toString());
-		ticket.setTravellerName(traveller.getFirstName() + " " + traveller.getLastName());
-		ticket.setDestination(train.getDestination());
-		ticket.setSource(train.getSource());
-		
-		if(availSeats != null && availSeats > 0) {
-			ticket.setBookingStatus(BookingStatus.CONFIRMED);
-			ticket.setSeatNumber(availSeats);
-		}
-		else {
-			ticket.setBookingStatus(BookingStatus.WAITLISTED);
-			ticket.setSeatNumber(0);
-		}
-		saveTicket(ticket);
-		return ticket;
+	
+	// Checks for the same traveller id inside ticket map and returns true if the traveller already has a ticket.
+	public boolean hasExistingBooking(Long travellerId, Long trainId, LocalDate date) {
+		return ticketMap.values().stream().anyMatch(
+				ticket -> ticket.getTravellerId() == travellerId &&
+				ticket.getTrainId() == trainId &&
+				ticket.getDepartureDate().equals(date)
+				);
 	}
+	
+	// Find ticket using pnr.
 	public Optional<Ticket> findTicketByPnr(String pnr) {
 		return Optional.ofNullable(ticketMap.get(pnr));
 	}
 
+	// Removes ticket from the map.
 	public void deleteTicket(String pnr) {
 		ticketMap.remove(pnr);
 	}
@@ -72,7 +88,7 @@ public class TicketRepository {
 	public void addToWaitlist(Ticket ticket) {
 		waitlistQueue.add(ticket);
 	}
-
+	// Process waitlist tickets.
 	public Ticket pollWaitlist() {
 		return waitlistQueue.poll();
 	}
