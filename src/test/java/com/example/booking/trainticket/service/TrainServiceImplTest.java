@@ -4,8 +4,9 @@ package com.example.booking.trainticket.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -23,6 +24,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.example.booking.trainticket.dto.TrainDto;
+import com.example.booking.trainticket.exception.ResourceNotFoundException;
 import com.example.booking.trainticket.model.Train;
 import com.example.booking.trainticket.repository.TrainRepository;
 import com.example.booking.trainticket.service.impl.TrainServiceImpl;
@@ -58,31 +60,31 @@ class TrainServiceImplTest {
 	void testFetchTrainFound() {
 		Train dummyTrain = createDummyTrain();
 
-		when(trainRepository.findTrainById(anyInt())).thenReturn(Optional.of(dummyTrain));
+		when(trainRepository.findTrainById(anyLong())).thenReturn(Optional.of(dummyTrain));
 
-		TrainDto result = trainServiceImpl.fetchTrain(1, LocalDate.now());
+		TrainDto result = trainServiceImpl.fetchTrain(1L, LocalDate.now());
 
 		assertNotNull(result);
 		assertEquals(dummyTrain.getTrainName(), result.getTrainName());
 	}
 
-	//    @Test
-	//    void testFetchTrainNotFound() {
-	//        when(trainRepository.findTrainById(anyInt())).thenReturn(Optional.empty());
-	//
-	//        Train result = trainServiceImpl.fetchTrain(1, LocalDate.now());
-	//
-	//        assertNull(result);
-	//    }
+	    @Test
+	    void testFetchTrainNotFound() {
+	        when(trainRepository.findTrainById(anyLong())).thenReturn(Optional.empty());
+	
+	
+	        assertThrows(ResourceNotFoundException.class, () -> 
+	        trainServiceImpl.fetchTrain(1L, LocalDate.now()));
+	    }
 
 	private Train createDummyTrain() {
-		Map<LocalDate, Integer> seats = new HashMap<>();
+		Map<LocalDate, Long> seats = new HashMap<>();
 		Map<LocalDate, Double> prices = new HashMap<>();
 		LocalDate date = LocalDate.now();
-		seats.put(date, 10);
+		seats.put(date, 10L);
 		prices.put(date, 100.0);
 
-		return new Train(1, "ExpressTest", "CityA", "CityB", seats, prices);
+		return new Train(1L, "ExpressTest", "CityA", "CityB", seats, prices);
 	}
 
 }

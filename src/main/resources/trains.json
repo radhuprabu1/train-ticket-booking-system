@@ -1,0 +1,44 @@
+[
+  {
+    "trainId": 1,
+    "trainName": "Chennai Express",
+    "source": "Chennai",
+    "destination": "Mumbai",
+    "availableSeatsByDate": {
+      "2025-05-10": 2,
+      "2025-05-11": 1
+    },
+    "ticketPriceByDate": {
+      "2025-05-10": 1500.0,
+      "2025-05-11": 1550.0
+    }
+  },
+  {
+    "trainId": 2,
+    "trainName": "Rajdhani Express",
+    "source": "Delhi",
+    "destination": "Kolkata",
+    "availableSeatsByDate": {
+      "2025-05-10": 2,
+      "2025-05-11": 1
+    },
+    "ticketPriceByDate": {
+      "2025-05-10": 2000.0,
+      "2025-05-11": 2050.0
+    }
+  },
+  {
+    "trainId": 3,
+    "trainName": "Shatabdi Express",
+    "source": "Bangalore",
+    "destination": "Chennai",
+    "availableSeatsByDate": {
+      "2025-05-10": 2,
+      "2025-05-11": 1
+    },
+    "ticketPriceByDate": {
+      "2025-05-10": 1200.0,
+      "2025-05-11": 1250.0
+    }
+  }
+]

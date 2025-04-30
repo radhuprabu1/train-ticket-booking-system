@@ -26,7 +26,7 @@ class TrainRepositoryTest {
 
     @Test
     void testSaveTrainSuccessfully() {
-        Train train = createDummyTrain(1);
+        Train train = createDummyTrain(1L);
         trainRepository.saveTrain(train);
         Train savedTrain = trainRepository.findTrainById(train.getTrainId()).get();
         assertNotNull(savedTrain);
@@ -35,10 +35,10 @@ class TrainRepositoryTest {
 
     @Test
     void testFindTrainByIdSuccess() {
-        Train train = createDummyTrain(2);
+        Train train = createDummyTrain(2L);
         trainRepository.saveTrain(train);
 
-        Optional<Train> result = trainRepository.findTrainById(2);
+        Optional<Train> result = trainRepository.findTrainById(2L);
 
         assertTrue(result.isPresent());
         assertEquals("GT Express", result.get().getTrainName());
@@ -46,14 +46,14 @@ class TrainRepositoryTest {
 
     @Test
     void testFindTrainById_NotFound() {
-        Optional<Train> result = trainRepository.findTrainById(999);
+        Optional<Train> result = trainRepository.findTrainById(999L);
 
         assertTrue(result.isEmpty());
     }
 
     @Test
     void testSearchTrainsFound() {
-        Train train = createDummyTrain(3);
+        Train train = createDummyTrain(3L);
         trainRepository.saveTrain(train);
 
         var results = trainRepository.searchTrains("Chennai", "Nagpur", LocalDate.now());
@@ -70,11 +70,11 @@ class TrainRepositoryTest {
     }
 
     // Utility method for creating dummy train
-    private Train createDummyTrain(int trainId) {
-        Map<LocalDate, Integer> seats = new HashMap<>();
+    private Train createDummyTrain(Long trainId) {
+        Map<LocalDate, Long> seats = new HashMap<>();
         Map<LocalDate, Double> prices = new HashMap<>();
         LocalDate date = LocalDate.now();
-        seats.put(date, 50);
+        seats.put(date, 50L);
         prices.put(date, 100.0);
 
         return new Train(trainId, "GT Express", "Chennai", "Nagpur", seats, prices);
