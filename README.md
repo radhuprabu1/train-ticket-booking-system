@@ -1,5 +1,11 @@
 # 🚂 Train Ticket Booking System - Spring Boot Project
 
+[![Java](https://img.shields.io/badge/Java-17-blue?logo=java)](https://www.java.com/)
+[![Spring Boot](https://img.shields.io/badge/SpringBoot-3-green?logo=spring)](https://spring.io/projects/spring-boot)
+[![Build](https://img.shields.io/badge/Build-Maven-blue?logo=apachemaven)](https://maven.apache.org/)
+[![Status](https://img.shields.io/badge/Database-InMemory-yellow)](#)
+[![Tested With](https://img.shields.io/badge/Tested%20With-Postman-orange?logo=postman)](https://www.postman.com/)
+
 ## 📋 Project Overview
 This is a simple yet powerful **Train Ticket Booking REST API Application**.  
 Built using **Java**, **Spring Boot**, and **Java Collections Framework** without any external database.  
@@ -67,7 +73,7 @@ com.example.trainticketbooking
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/radhuprabu-1/train-ticket-booking.git
+   git clone https://github.com/radhuprabu1/train-ticket-booking.git
    cd train-ticket-booking-system
    ```
 
